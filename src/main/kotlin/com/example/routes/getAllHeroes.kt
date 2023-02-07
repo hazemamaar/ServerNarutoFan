@@ -14,9 +14,9 @@ fun Route.getAllHeroes(){
     get("/heroes"){
 
         try {
-            val page =call.request.queryParameters["page"]?.toInt() ?: 1
-            require(page in 1..5)
-            val apiResponse = heroRepo.getAllHeroes(page)
+//            val page =call.request.queryParameters["page"]?.toInt() ?: 1
+//            require(page in 1..5)
+            val apiResponse = heroRepo.getAllHeroes()
             call.respond(message = apiResponse, status = HttpStatusCode.OK)
         }catch (e:NumberFormatException){
             call.respond(message= ApiResponse(success = false,message="Only Number Allowed."), status = HttpStatusCode.BadRequest)
