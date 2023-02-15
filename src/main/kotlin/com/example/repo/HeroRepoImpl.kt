@@ -146,7 +146,7 @@ class HeroRepoImpl : HeroRepo {
             id = 8,
             name = "Code",
             image = "/images/code.jpg",
-about = "Code (コード, Kōdo) is the last active Inner from Kara. Carrying Isshiki Ōtsutsuki's legacy within him, he inherited the Ōtsutsuki Clan's will to become a Celestial Being and continually evolve.",
+            about = "Code (コード, Kōdo) is the last active Inner from Kara. Carrying Isshiki Ōtsutsuki's legacy within him, he inherited the Ōtsutsuki Clan's will to become a Celestial Being and continually evolve.",
             rating = 5.0,
             power = 95,
             month = "April",
@@ -235,7 +235,7 @@ about = "Code (コード, Kōdo) is the last active Inner from Kara. Carrying Is
             id = 13,
             name = "Sarada",
             image = "/images/sarada.jpg",
-about = "Sarada Uchiha (うちはサラダ, Uchiha Sarada) is a chūnin-level kunoichi from Konohagakure's Uchiha clan. Because she was raised only by her mother without having her father around, Sarada initially struggles to understand who she is or what she's supposed to be.",
+            about = "Sarada Uchiha (うちはサラダ, Uchiha Sarada) is a chūnin-level kunoichi from Konohagakure's Uchiha clan. Because she was raised only by her mother without having her father around, Sarada initially struggles to understand who she is or what she's supposed to be.",
             rating = 4.5,
             power = 90,
             month = "March",
@@ -252,7 +252,7 @@ about = "Sarada Uchiha (うちはサラダ, Uchiha Sarada) is a chūnin-level ku
             id = 14,
             name = "Urashiki",
             image = "/images/urashiki.jpg",
-about = "Urashiki Ōtsutsuki (大筒木ウラシキ, Ōtsutsuki Urashiki) was a low-ranking member of the Ōtsutsuki clan's main family, sent to assist Momoshiki and Kinshiki on their mission to investigate Kaguya's whereabouts and gather the chakra of the God Tree on Earth.",
+            about = "Urashiki Ōtsutsuki (大筒木ウラシキ, Ōtsutsuki Urashiki) was a low-ranking member of the Ōtsutsuki clan's main family, sent to assist Momoshiki and Kinshiki on their mission to investigate Kaguya's whereabouts and gather the chakra of the God Tree on Earth.",
             rating = 5.0,
             power = 97,
             month = "March",
@@ -309,7 +309,22 @@ about = "Urashiki Ōtsutsuki (大筒木ウラシキ, Ōtsutsuki Urashiki) was a 
 //       }
 //       return mapOf("prevPage" to prevPage ,"nextPage" to nexePage)
 //   }
-    override suspend fun searchHeroes(name: String): ApiResponse {
-        TODO("Not yet implemented")
+    override suspend fun searchHeroes(name: String?): ApiResponse {
+        return ApiResponse(success = true, message = "ok",heroes=findHeroes(name))
+    }
+
+    private fun findHeroes(query: String?): List<Hero> {
+        val founded = mutableListOf<Hero>()
+        return if (!query.isNullOrEmpty()) {
+            heroes.forEach {
+                hero ->
+                if(hero.name.lowercase().contains(query.lowercase())){
+                    founded.add(hero)
+                }
+            }
+            founded
+        }else{
+            emptyList()
+        }
     }
 }
